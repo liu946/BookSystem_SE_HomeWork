@@ -1,4 +1,4 @@
-
+# -*- coding:utf-8 -*-
 def countryEnumTuple():
     return (('AF', 'Afghanistan 阿富汗'),
             ('AL', 'Albania 阿尔巴尼亚'),
