@@ -14,13 +14,13 @@ class Author(models.Model):
         ordering = ['Name']
 
     def __unicode__(self):
-        return self.user.username
+        return self.Name
 
 
 class Book(models.Model):
     ISBN = models.AutoField(primary_key=True)
     Title = models.CharField(max_length=128)
-    AuthorID = models.ForeignKey(Author)
+    Author = models.ForeignKey(Author)
     Publisher = models.CharField(max_length=128)
     PublishDate = models.DateField()
     Price = models.DecimalField()
