@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 """booksys URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -19,9 +20,11 @@ from bookmanagement.views import *
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^books/$',BookList.as_view()),
-    url(r'^books/create$',BookCreate.as_view()),
+    url(r'^books/create$',BookCreate.as_view(success_url="/books")),
     url(r'^books/update$',BookCreate.as_view()),
-    url(r'^author/$',AuthorList.as_view()),
-    url(r'^author/create$',AuthorCreate.as_view()),
+    url(r'^author/$',AuthorList.as_view(),name='author_list'),
+    ## success_url = "success/" 会到本层的success 而 success_url="/success/" 会从网站根开始找
+    ## reverse 可以传入，自己起的路由名字，view，或带参数的路由 https://docs.djangoproject.com/en/1.8/ref/urlresolvers/
+    url(r'^author/create$',AuthorCreate.as_view(success_url='/author')),
 
 ]

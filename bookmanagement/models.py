@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 from utils.countryEnum import countryEnumTuple
-
+from django.core.urlresolvers import reverse
 
 class Author(models.Model):
     COUNTRY_ENUM = countryEnumTuple()
@@ -27,6 +27,9 @@ class Book(models.Model):
 
     class META:
         ordering = ['Title']
+
+    def get_absolute_url(self):
+        return reverse("Book.views.details", args=[str(self.ISBN)])
 
     def __unicode__(self):
         return self.Title
