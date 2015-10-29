@@ -23,7 +23,7 @@ class Book(models.Model):
     Author = models.ForeignKey(Author)
     Publisher = models.CharField(max_length=128)
     PublishDate = models.DateField()
-    Price = models.DecimalField()
+    Price = models.DecimalField(max_digits=19,decimal_places=2) # one billion with 2 decimal number
 
     class META:
         ordering = ['Title']
