@@ -19,12 +19,16 @@ from django.contrib import admin
 from bookmanagement.views import *
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^books/$',BookList.as_view()),
+    url(r'^books/$',BookList.as_view(),name="booklist"),
     url(r'^books/create$',BookCreate.as_view(success_url="/books")),
-    url(r'^books/update$',BookCreate.as_view()),
+    url(r'^books/update/(?P<pk>\d+)/$',BookUpdate.as_view(success_url="/books"),name="bookupdate"),
+
+
     url(r'^author/$',AuthorList.as_view(),name='author_list'),
     ## success_url = "success/" 会到本层的success 而 success_url="/success/" 会从网站根开始找
     ## reverse 可以传入，自己起的路由名字，view，或带参数的路由 https://docs.djangoproject.com/en/1.8/ref/urlresolvers/
+    ## 此处起名是可以传入url函数的 在文档中为view-name
     url(r'^author/create$',AuthorCreate.as_view(success_url='/author')),
+    url(r'^author/update/(?P<pk>\d+)/$',AuthorUpdate.as_view(success_url='/author'),name="authorupdate"),
 
 ]

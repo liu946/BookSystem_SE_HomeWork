@@ -10,17 +10,17 @@ class BookList(ListView):
 
 class BookCreate(CreateView):
     model = Book
-    fields = ['ISBN',"Title","Publisher","PublishDate","Author"]
+    fields = ['ISBN',"Title","Publisher","PublishDate","Author","Price"]
     success_msg = "Book Created!"
 
 
 class BookUpdate(UpdateView):
     model = Book
-    fields = ['ISBN',"Title","Publisher","PublishDate","Author"]
+    fields = ['ISBN',"Title","Publisher","PublishDate","Author","Price"]
     template_name_suffix = '_update_form'
 
 class BookDetail(DetailView):
-        model = Book
+    model = Book
 
 class AuthorList(ListView):
     model = Author

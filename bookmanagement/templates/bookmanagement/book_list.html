@@ -4,7 +4,7 @@
     <h2>Books</h2>
     <ul>
         {% for book in object_list %}
-            <li>{{ book.Title }}</li>
+            <li>{{ book.Title }} <a href="{% url 'bookupdate' pk=book.ISBN %}">edit</a> </li>
         {% endfor %}
     </ul>
 {% endblock %}
