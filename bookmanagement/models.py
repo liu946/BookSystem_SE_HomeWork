@@ -28,8 +28,5 @@ class Book(models.Model):
     class META:
         ordering = ['Title']
 
-    def get_absolute_url(self):
-        return reverse("Book.views.details", args=[str(self.ISBN)])
-
     def __unicode__(self):
         return self.Title

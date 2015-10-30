@@ -16,19 +16,25 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from bookmanagement.views import *
+from bookmanagement.views import RestView
+from bookmanagement.models import Book,Author
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^books/$',BookList.as_view(),name="booklist"),
-    url(r'^books/create$',BookCreate.as_view(success_url="/books")),
-    url(r'^books/update/(?P<pk>\d+)/$',BookUpdate.as_view(success_url="/books"),name="bookupdate"),
 
 
-    url(r'^author/$',AuthorList.as_view(),name='author_list'),
+    url(r'^books/',RestView(model=Book,field=['ISBN', "Title", "Publisher", "PublishDate", "Author", "Price"]).urlGroup()),
+    url(r'^author/',RestView(model=Author,field=["Name", "Age", "Country"]).urlGroup()),
+
     ## success_url = "success/" 会到本层的success 而 success_url="/success/" 会从网站根开始找
     ## reverse 可以传入，自己起的路由名字，view，或带参数的路由 https://docs.djangoproject.com/en/1.8/ref/urlresolvers/
     ## 此处起名是可以传入url函数的 在文档中为view-name
-    url(r'^author/create$',AuthorCreate.as_view(success_url='/author')),
-    url(r'^author/update/(?P<pk>\d+)/$',AuthorUpdate.as_view(success_url='/author'),name="authorupdate"),
+
+    # url(r'^author/',include([
+    #     url(r'^$',AuthorList.as_view(),name='author_list'),
+    #     url(r'^create$',AuthorCreate.as_view()),
+    #     url(r'^update/(?P<pk>\d+)/$',AuthorUpdate.as_view(),name="authorupdate"),
+    # ]))
+
 
 ]
