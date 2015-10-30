@@ -201,7 +201,12 @@ a.remove-link:hover {
                 background: transparent url('../images/menu-current-arrow.gif') right center no-repeat !important;
                 }
 
-
+#sidebar-title-no-image{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    color: #EFEFEF;
+}
 /************ Messages ************/
 
 #messages p,
