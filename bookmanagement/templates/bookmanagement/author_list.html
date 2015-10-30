@@ -5,7 +5,10 @@
     <ul>
         {% for author in object_list %}
 
-            <li>{{ author.Name }}  <a href='./update/{{ author.AuthorID }}'>edit</a> </li>
+            <li>{{ author.Name }}
+                <a href='./update/{{ author.AuthorID }}'>edit</a>
+                <a href='./delete/{{ author.AuthorID }}'>delete</a>
+            </li>
 
         {% endfor %}
     </ul>
