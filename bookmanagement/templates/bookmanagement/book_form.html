@@ -1,8 +1,10 @@
 {% extends "base.html" %}
-
-{% block content %}
+{% block boxtitle %}
+    添加图书
+{% endblock %}
 {% block currentbook %}current{% endblock %}
-<form id="form" action="" method="post">{% csrf_token %}
+{% block content %}
+    <form id="form" action="" method="post">{% csrf_token %}
     {{ form.as_table }}
     <input type="submit" value="Create" />
 </form>

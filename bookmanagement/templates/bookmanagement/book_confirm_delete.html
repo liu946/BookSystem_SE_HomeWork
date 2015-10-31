@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block boxtitle %}
+    删除确认
+{% endblock %}
 {% block currentbook %}current{% endblock %}
 {% block content %}
     <form action="" method="post">{% csrf_token %}
