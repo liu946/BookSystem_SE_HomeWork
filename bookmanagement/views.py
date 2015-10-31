@@ -6,9 +6,8 @@ from django.shortcuts import render
 from django.conf.urls import include, url
 from django.views.generic import *
 from django.views.generic.edit import *
+from django.shortcuts import redirect
 from bookmanagement.models import *
-from django.core.urlresolvers import reverse_lazy
-
 
 # todo to reorganize the construct to extend the restful operation
 
@@ -27,7 +26,19 @@ class RestView(object):
         return include([url(r'^$',self.asList().as_view()),
                         url(r'^create$',self.asCreate().as_view()),
                         url(r'^update/(?P<pk>\d+)/$',self.asUpdate().as_view()),
-                        url(r'^delete/(?P<pk>\d+)/$',self.asDelete().as_view())])
+                        url(r'^delete/(?P<pk>\d+)/$',self.asDelete().as_view()),
+                        url(r'^deleteAll$',self.asDeleteAll().as_view()),
+                        ])
+    def asDeleteAll(self):
+        t_model = self.model
+        class DeleteAll(View):
+            model = t_model
+            def post(self, request, *args, **kwargs):
+                deleteList = [ int(key) for key in request.POST if request.POST[key] == u'on']
+                self.model.objects.filter(pk__in=deleteList).delete()
+                return redirect('./')
+
+        return DeleteAll
 
     def asList(self):
         t_model = self.model
