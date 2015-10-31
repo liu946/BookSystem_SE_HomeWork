@@ -4,7 +4,7 @@
 {% block boxtitle %}
     作家列表
 {% endblock %}
-
+{% block currentauthor %}current{% endblock %}
 {% block content %}
     <form method="post" action="./deleteAll">{% csrf_token %}
     <table>

@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-
+{% block boxtitle %}
+    作者编辑
+{% endblock %}
+{% block currentauthor %}current{% endblock %}
 {% block content %}
     <form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
+    {{ form.as_table }}
     <input type="submit" value="Create" />
 </form>
 {% endblock %}

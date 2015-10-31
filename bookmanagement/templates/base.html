@@ -42,24 +42,12 @@
             </a>
             <ul id="main-nav">
                 <!-- Accordion Menu -->
-                <li><a href="#" class="nav-top-item no-submenu">
-                    <!-- Add the class "no-submenu" to menu items with no sub menu -->
-                    Search </a></li>
-                <li><a href="#" class="nav-top-item current">Author </a>
+
+                <li><a href="/author" class="nav-top-item no-submenu {% block currentauthor %}{% endblock %}">Author </a>
                     <!-- Add the class "current" to current menu item -->
-                    <ul>
-                        <li><a href="#">List Authors</a></li>
-                        <li><a class="current" href="#">Create New Author</a></li>
-                        <!-- Add class "current" to sub menu items also -->
-                        <li><a href="#">Edit Author</a></li>
-                    </ul>
                 </li>
-                <li><a href="#" class="nav-top-item"> Book </a>
-                    <ul>
-                        <li><a href="#">List Books</a></li>
-                        <li><a href="#">Create a new Book</a></li>
-                        <li><a href="#">Edit Book</a></li>
-                    </ul>
+                <li><a href="/books" class="nav-top-item no-submenu {% block currentbook %}{% endblock %}"> Book </a>
+
                 </li>
             </ul>
             <!-- End #main-nav -->
