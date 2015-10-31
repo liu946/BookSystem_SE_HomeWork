@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+
+{% block boxtitle %}
+    作家列表
+{% endblock %}
+
 {% block content %}
     <form method="post" action="./deleteAll">{% csrf_token %}
     <table>
@@ -34,7 +39,7 @@
             <td>{{ author.AuthorID }}</td>
             <td>{{ author.Name }}</td>
             <td>{{ author.Age }}</td>
-            <td>{{ author.Country }}</td>
+            <td>{{ author.get_Country_display  }}</td>
             <td>
                 <!-- Icons -->
                 <a href='./update/{{ author.AuthorID }}' title="Edit"><img src="{% static 'images/icons/pencil.png' %}" alt="Edit"/></a>
