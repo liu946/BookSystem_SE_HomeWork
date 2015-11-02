@@ -23,7 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2slh_&xjb$g(x65wl^l31iyc4v7up8+l%t-bdiow7lg3$+*%68'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if 'SERVER_SOFTWARE' in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -56,7 +59,9 @@ ROOT_URLCONF = 'booksys.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            './bookmanagement/templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +79,18 @@ WSGI_APPLICATION = 'booksys.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+# MySQL Config
+if 'SERVER_SOFTWARE' in os.environ:
+    from sae.const import (
+        MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASS, MYSQL_DB
+    )
+else:
+    # Make `python manage.py syncdb` works happy!
+    MYSQL_HOST = 'localhost'
+    MYSQL_PORT = '3306'
+    MYSQL_USER = 'root'
+    MYSQL_PASS = 'root'
+    MYSQL_DB = 'booksys'
 
 DATABASES = {
     'default': {
@@ -82,6 +99,15 @@ DATABASES = {
     }
 }
 
+# SQLite Config
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+'''
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -90,7 +116,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 
@@ -101,3 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static').replace('\\', '/')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "staticorg"),
+)
