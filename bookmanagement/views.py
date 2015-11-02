@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.conf.urls import include, url
+from django.shortcuts import render, render_to_response
 from django.views.generic import *
 from django.views.generic.edit import *
 from django.shortcuts import redirect
@@ -23,12 +24,13 @@ class RestView(object):
 
 
     def urlGroup(self):
-        return include([url(r'^$',self.asList().as_view()),
-                        url(r'^create$',self.asCreate().as_view()),
-                        url(r'^update/(?P<pk>\d+)/$',self.asUpdate().as_view()),
-                        url(r'^delete/(?P<pk>\d+)/$',self.asDelete().as_view()),
-                        url(r'^deleteAll$',self.asDeleteAll().as_view()),
-                        ])
+        return [url(r'^$',self.asList().as_view()),
+                url(r'^create/$',self.asCreate().as_view()),
+                url(r'^update/(?P<pk>\d+)/$',self.asUpdate().as_view()),
+                url(r'^delete/(?P<pk>\d+)/$',self.asDelete().as_view()),
+                url(r'^deleteAll$',self.asDeleteAll().as_view()),
+                url(r'^detail/(?P<pk>[-\w]+)/$', self.asDetail().as_view()),
+                ]
     def asDeleteAll(self):
         t_model = self.model
         class DeleteAll(View):
@@ -39,6 +41,13 @@ class RestView(object):
                 return redirect('./')
 
         return DeleteAll
+
+    def asDetail(self):
+        t_model = self.model
+        class Detail(DetailView):
+            model = t_model
+
+        return Detail
 
     def asList(self):
         t_model = self.model
@@ -56,7 +65,7 @@ class RestView(object):
         class Create(CreateView):
             model = t_model
             fields = t_field
-            success_url = './'
+            success_url = '../'
 
         return Create
 
@@ -84,45 +93,32 @@ class RestView(object):
         return Delete
 
 
-#
-# class BookView(RestView):
-#     model = Book
-#     fields = ['ISBN', "Title", "Publisher", "PublishDate", "Author", "Price"]
-#     success_msg = "Book Created!"
-#
-#
-# class BookList(ListView):
-#     model = Book
-#
-#
-# class BookCreate(CreateView):
-#     model = Book
-#     fields = ['ISBN', "Title", "Publisher", "PublishDate", "Author", "Price"]
-#     success_msg = "Book Created!"
-#
-#
-# class BookUpdate(UpdateView):
-#     model = Book
-#     fields = ['ISBN', "Title", "Publisher", "PublishDate", "Author", "Price"]
-#     template_name_suffix = '_update_form'
-#
-#
-# class BookDetail(DetailView):
-#     model = Book
-#
-#
-# class AuthorList(ListView):
-#     model = Author
-#
-#
-# class AuthorCreate(CreateView):
-#     model = Author
-#     fields = ["Name", "Age", "Country"]
-#     success_msg = "Author Created!"
-#
-#
-# class AuthorUpdate(UpdateView):
-#     success_url='../..'
-#     model = Author
-#     fields = ["Name", "Age", "Country"]
-#     template_name_suffix = '_update_form'
+
+class BookView(RestView):
+
+    def __init__(self):
+        super(BookView,self).__init__(
+            model=Book,
+            field=['ISBN', "Title", "Publisher", "PublishDate", "Author", "Price"]
+        )
+        self.searchField= 'Author'
+
+
+    def urlGroup(self):
+        url_array = super(BookView, self).urlGroup()
+        url_array.append(url(r'^search', self.asSearch().as_view()))
+        return url_array
+
+    def asSearch(self):
+        t_model = self.model
+        class Search(View):
+            model = t_model
+            template_name_suffix = '_search'
+            def get(self, request, *args, **kwargs):
+                queryset = self.model.objects.filter(Author__Name__contains = request.GET[u'search']).all()
+                content = {'object_list': queryset,'search_str':request.GET[u'search']}
+                return render_to_response('bookmanagement/'+str.lower(self.model.__name__)+self.template_name_suffix+'.html',content)
+
+
+        return Search
+

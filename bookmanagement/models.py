@@ -18,7 +18,7 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    ISBN = models.AutoField(primary_key=True)
+    ISBN = models.BigIntegerField(primary_key=True)
     Title = models.CharField(max_length=128)
     Author = models.ForeignKey(Author)
     Publisher = models.CharField(max_length=128)

@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from bookmanagement.views import RestView
+from bookmanagement.views import RestView,BookView
 from bookmanagement.models import Book,Author
 from django.conf.urls.static import static
 from django.conf import settings
@@ -24,8 +24,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
 
-    url(r'^books/',RestView(model=Book,field=['ISBN', "Title", "Publisher", "PublishDate", "Author", "Price"]).urlGroup()),
-    url(r'^author/',RestView(model=Author,field=["Name", "Age", "Country"]).urlGroup()),
+    url(r'^books/',include(BookView().urlGroup())),
+    url(r'^author/',include(RestView(model=Author,field=["Name", "Age", "Country"]).urlGroup())),
 
     ## success_url = "success/" 会到本层的success 而 success_url="/success/" 会从网站根开始找
     ## reverse 可以传入，自己起的路由名字，view，或带参数的路由 https://docs.djangoproject.com/en/1.8/ref/urlresolvers/

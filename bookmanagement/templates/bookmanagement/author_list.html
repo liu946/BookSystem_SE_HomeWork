@@ -6,7 +6,7 @@
 {% endblock %}
 {% block currentauthor %}current{% endblock %}
 {% block content %}
-    <form method="post" action="./deleteAll">{% csrf_token %}
+    <form id="form" method="post" action="./deleteAll">{% csrf_token %}
     <table>
         <thead>
         <tr>
@@ -24,7 +24,9 @@
         <tr>
             <td colspan="6">
                 <div class="bulk-actions align-left">
-                    <input type="submit" class="button" value="Delete selected"/></div>
+                    <a class="buttoni red" type="submit" onclick="$('#form').submit()">Delete selected</a>
+                    <a class="buttoni green" href="./create/">Create New</a>
+                </div>
                 <!-- End .pagination -->
                 <div class="clear"></div>
             </td>
@@ -37,7 +39,7 @@
                 <input type="checkbox" name="{{ author.AuthorID }}" />
             </td>
             <td>{{ author.AuthorID }}</td>
-            <td>{{ author.Name }}</td>
+            <td><a href="./detail/{{ author.AuthorID }}">{{ author.Name }}</a></td>
             <td>{{ author.Age }}</td>
             <td>{{ author.get_Country_display  }}</td>
             <td>

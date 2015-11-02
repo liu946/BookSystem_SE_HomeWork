@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block boxtitle %}
+    图书详细信息
+{% endblock %}
+{% block currentbook %}current{% endblock %}
+{% block content %}
+<h1 style="position: inherit; color: #222222;margin-bottom: 20px">《{{ object.Title }}》</h1>
+<p>Author: {{ object.Author }}&nbsp;&nbsp;({{ object.Author.Age }}'s old. {{ object.Author.get_Country_display }})</p>
+<p>Publisher: {{ object.Publisher }}</p>
+<p>Published: {{ object.PublishDate|date }}</p>
+<p>Price: {{ object.Price }} ￥</p>
+<p>ISBN: {{  object.ISBN  }}</p>
+    <p style="font-size: large">
+<a href="../../update/{{ object.ISBN }}" class="large buttoni blue">修改信息</a>
+<a href="../../delete/{{ object.ISBN }}" class="large buttoni red">删除信息</a>
+</p>
+{% endblock %}
