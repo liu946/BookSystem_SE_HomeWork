@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2slh_&xjb$g(x65wl^l31iyc4v7up8+l%t-bdiow7lg3$+*%68'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if 'SERVER_SOFTWARE' in os.environ:
-    DEBUG = False
-else:
-    DEBUG = True
+# if 'SERVER_SOFTWARE' in os.environ:
+#     DEBUG = False
+# else:
+DEBUG = True
 
 ALLOWED_HOSTS = ['http://bookviewsys.sinaapp.com/']
 
