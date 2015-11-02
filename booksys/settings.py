@@ -28,7 +28,7 @@ if 'SERVER_SOFTWARE' in os.environ:
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['http://bookviewsys.sinaapp.com/']
 
 
 # Application definition
