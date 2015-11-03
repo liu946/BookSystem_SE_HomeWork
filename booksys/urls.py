@@ -16,14 +16,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from bookmanagement.views import RestView,BookView
-from bookmanagement.models import Book,Author
+from bookmanagement.views import RestView,BookView,RedirectTo
+from bookmanagement.models import Author
 from django.conf.urls.static import static
 from django.conf import settings
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-
-
+    url(r'^$',RedirectTo('./books').as_view()),
     url(r'^books/',include(BookView().urlGroup())),
     url(r'^author/',include(RestView(model=Author,field=["Name", "Age", "Country"]).urlGroup())),
 

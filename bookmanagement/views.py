@@ -10,7 +10,19 @@ from django.views.generic.edit import *
 from django.shortcuts import redirect
 from bookmanagement.models import *
 
-# todo to reorganize the construct to extend the restful operation
+
+class RedirectTo(object):
+
+    def __init__(self,url):
+        self.url = url
+
+    def as_view(self):
+        t_url = self.url
+        class Redirect(RedirectView):
+            url = t_url
+
+        return Redirect.as_view()
+
 
 class RestView(object):
     ''' > 抽象大法好! '''
