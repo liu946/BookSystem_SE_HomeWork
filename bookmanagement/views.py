@@ -129,8 +129,9 @@ class BookView(RestView):
             def get(self, request, *args, **kwargs):
                 queryset = self.model.objects.filter(Author__Name__contains = request.GET[u'search']).all()
                 content = {'object_list': queryset,'search_str':request.GET[u'search']}
-                return render_to_response('bookmanagement/'+str.lower(self.model.__name__)+self.template_name_suffix+'.html',content)
-
-
+                return render_to_response('bookmanagement/'+
+                                          str.lower(self.model.__name__)+
+                                          self.template_name_suffix+'.html'
+                                          ,content)
         return Search
 
