@@ -1,4 +1,9 @@
 # -*- coding:utf-8 -*-
+##
+# Date: 2015/11/06 (CST)
+# Author: Michael Liu (HIT)
+# Copyright (c) 2015 liu. All rights reserved.
+#
 from django.db import models
 from utils.countryEnum import countryEnumTuple
 from django.core.urlresolvers import reverse

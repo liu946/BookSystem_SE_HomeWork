@@ -1,8 +1,11 @@
 # coding=utf-8
 # -*- coding:utf-8 -*-
-from django.shortcuts import render
+##
+# Date: 2015/11/06 (CST)
+# Author: Michael Liu (HIT)
+# Copyright (c) 2015 liu. All rights reserved.
+#
 
-# Create your views here.
 from django.conf.urls import include, url
 from django.shortcuts import render, render_to_response
 from django.views.generic import *
@@ -12,7 +15,7 @@ from bookmanagement.models import *
 
 
 class RedirectTo(object):
-
+    """ redirect View used by instants """
     def __init__(self,url):
         self.url = url
 
@@ -25,7 +28,7 @@ class RedirectTo(object):
 
 
 class RestView(object):
-    ''' > 抽象大法好! '''
+    ''' Restful API for Model CRUD operation '''
 
 
     def __init__(self,model=None,field=None,success_url=None):
